@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minions - Mundo Amarelo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Fredoka One', cursive;
+      background-color: #fff8dc;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      text-align: center;
+    }
+
+    header {
+      background-color: #fbe170;
+      color: #33466f;
+      padding: 20px;
+      font-size: 2.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    nav {
+      background-color: #5a6e99;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+  color: white;
+  padding: 15px 25px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.6rem; /* ← AUMENTADO DE 1.1rem PARA 1.6rem */
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+    nav a:hover {
+      background-color: #738bb3;
+      border-radius: 8px;
+      transform: scale(1.1) rotate(-2deg);
+    }
+
+    .content {
+      padding: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    section {
+      margin-bottom: 40px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 10px;
+      padding: 10px 0;
+      justify-content: center;
+    }
+
+    .carousel img {
+      scroll-snap-align: center;
+      width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    #filmes {
+      position: relative;
+    }
+
+    .movie-carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .movie-gallery {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      gap: 20px;
+      padding: 20px 0;
+      scroll-behavior: smooth;
+      overflow-x: auto;
+    }
+
+    .movie-card {
+      flex: 0 0 calc(33.333% - 20px);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+
+    .movie-card:hover {
+      transform: scale(1.08);
+    }
+
+    .movie-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .movie-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.85);
+      color: white;
+      padding: 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .movie-card:hover .movie-info {
+      opacity: 1;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #5a6e99;
+      color: white;
+      border: none;
+      font-size: 2rem;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 10;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    .arrow:hover {
+      background-color: #738bb3;
+    }
+
+    .arrow-left {
+      left: 0;
+    }
+
+    .arrow-right {
+      right: 0;
+    }
+
+    .interaction-blocks {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 1.3rem;
+    }
+
+    .interaction-block {
+      background: #fbe170;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 250px;
+      text-align: left;
+    }
+
+    .interaction-block h3 {
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    .interaction-block a, section#jogos a {
+      display: inline-block;
+      padding: 12px 20px;
+      background-color: #fff7d6;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #2e3a59;
+      font-weight: bold;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      margin: 8px 0;
+    }
+
+    .interaction-block a:hover, section#jogos a:hover {
+      background-color: #fbe170;
+      transform: translateY(-4px) scale(1.05);
+      color: #000;
+    }
+
+    .interaction-block.viloes ul {
+      list-style: disc;
+      padding-left: 20px;
+    }
+
+    #jogos ul {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 0;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    #jogos li a {
+      font-size: 1.4rem;
+      padding: 12px 20px;
+      background-color: #fff7d6;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #2e3a59;
+      font-weight: bold;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    #jogos li a:hover {
+      background-color: #fbe170;
+      transform: translateY(-4px) scale(1.05);
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bem-vindo ao Mundo dos Minions!</h1>
+  </header>
+
+  <nav>
+    <a href="#filmes">Filmes</a>
+    <a href="#interacoes">Interações</a>
+    <a href="#jogos">Jogos</a>
+  </nav>
+
+  <div class="content">
+    <section>
+      <h2>Carrossel de Fotos dos Minions</h2>
+      <div class="carousel">
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3hoaDdsM213bWI4MWdzbzFqMDJkdGY0aW5zaXFpNnI5enR1MDk2byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CHyxN9bNkMc3S/giphy.gif" alt="Minions 1" />
+        <img src="https://media.giphy.com/media/EOpZ7XsVfTN2E/giphy.gif" alt="Minions 2" />
+        <img src="https://media.giphy.com/media/ylqr4JvFaZqnK/giphy.gif" alt="Despicable Me" />
+      </div>
+    </section>
+
+    <section id="filmes">
+        <h2>🎬 Destaques dos Filmes dos Minions</h2>
+        <div class="movie-carousel-wrapper">
+          <button class="arrow arrow-left" onclick="scrollCarousel(-1)">❮</button>
+          <div class="movie-gallery" id="movieGallery">
+            <div class="movie-card">
+              <img src="https://mamaenaescola.wordpress.com/wp-content/uploads/2015/06/5801_grande.jpg" alt="Minions" />
+              <div class="movie-info">
+                <strong>Minions</strong><br />Diretor: Kyle Balda<br />Ano: 2015
+              </div>
+            </div>
+            <div class="movie-card">
+              <img src="https://br.web.img3.acsta.net/pictures/20/02/03/15/22/4954456.jpg" alt="Minions 2" />
+              <div class="movie-info">
+                <strong>Minions 2: A Origem de Gru</strong><br />Diretor: Kyle Balda<br />Ano: 2022
+              </div>
+            </div>
+            <div class="movie-card">
+              <img src="https://static.wikia.nocookie.net/dublagem/images/f/f1/MeuMalvadoFavorito.jpg/revision/latest?cb=20241208044532&path-prefix=pt-br" alt="Meu Malvado Favorito" />
+              <div class="movie-info">
+                <strong>Meu Malvado Favorito</strong><br />Diretor: Pierre Coffin<br />Ano: 2010
+              </div>
+            </div>
+            <div class="movie-card">
+              <img src="https://br.web.img3.acsta.net/pictures/210/093/21009399_20130529235239756.jpg" alt="Meu Malvado Favorito 2" />
+              <div class="movie-info">
+                <strong>Meu Malvado Favorito 2</strong><br />Diretor: Pierre Coffin<br />Ano: 2013
+              </div>
+            </div>
+            <div class="movie-card">
+              <img src="https://br.web.img2.acsta.net/pictures/17/03/14/20/37/126690.jpg" alt="Meu Malvado Favorito 3" />
+              <div class="movie-info">
+                <strong>Meu Malvado Favorito 3</strong><br />Diretor: Pierre Coffin<br />Ano: 2017
+              </div>
+            </div>
+            <div class="movie-card">
+              <img src="https://ingresso-a.akamaihd.net/prd/img/movie/meu-malvado-favorito-4/4d756249-3b88-4b59-baa2-527f5e3d4c3e.webp" alt="Meu Malvado Favorito 4" />
+              <div class="movie-info">
+                <strong>Meu Malvado Favorito 4</strong><br />Diretor: Chris Renaud<br />Ano: 2024
+              </div>
+            </div>
+          </div>
+          <button class="arrow arrow-right" onclick="scrollCarousel(1)">❯</button>
+        </div>
+      </section>
+
+    <section id="interacoes">
+      <h2>Interações</h2>
+      <div class="interaction-blocks">
+        <div class="interaction-block viloes">
+          <h3>Vilões</h3>
+          <ul>
+            <li>Gru</li>
+            <li>El Macho</li>
+            <li>Scarlet Overkill</li>
+            <li>Balthazar Bratt</li>
+          </ul>
+        </div>
+        <div class="interaction-block">
+          <h3>Livros de Receitas</h3>
+          <ul>
+            <li><a href="receitas minions.pdf" target="_blank" rel="noopener noreferrer">Receitas Divertidas</a></li>
+            <li><a href="receitas minions.pdf" target="_blank" rel="noopener noreferrer">Bolinhos Roxos</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="jogos">
+      <h2>Jogos</h2>
+      <ul>
+        <li><a href="https://m.joguix.com/jogos-de-pintar-minions/" target="_blank" rel="noopener noreferrer">Jogos para Colorir</a></li>
+        <li><a href="https://play.google.com/store/apps/details?id=com.gameloft.android.ANMP.GloftDMHM&hl=pt_BR&pli=1" target="_blank" rel="noopener noreferrer">Game dos Minions</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+    const gallery = document.getElementById('movieGallery');
+
+    function scrollCarousel(direction) {
+      const scrollAmount = 300;
+      gallery.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  </script>
+</body>
+</html>
